@@ -95,10 +95,11 @@ const soundMap = {
 
 // Add event listeners for button clicks
 const drumButtons = document.querySelectorAll(".drum");
+
 drumButtons.forEach((button) => {
   button.addEventListener("click", function () {
-    const buttonPress = this.innerHTML;
-    playSound(buttonPress);
+    const buttonClick = this.innerHTML;
+    playSound(buttonClick);
   });
 });
 
@@ -110,11 +111,22 @@ document.addEventListener("keydown", function (event) {
   }
 });
 
-function playSound(key) {
-  if (soundMap.hasOwnProperty(key)) {
-    const audio = new Audio(soundMap[key]);
+function playSound(currentKey) {
+  if (soundMap.hasOwnProperty(currentKey)) {
+    const audio = new Audio(soundMap[currentKey]);
     audio.play();
+    buttonAnimation(currentKey);
   } else {
-    console.log("err:" + key);
+    console.log("err:" + currentKey);
   }
+}
+
+function buttonAnimation(currentKey) {
+  var activeButton = document.querySelector("." + currentKey);
+
+  activeButton.classList.add("pressed");
+
+  setTimeout(function () {
+    activeButton.classList.remove("pressed");
+  }, 100);
 }
